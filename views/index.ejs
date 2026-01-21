@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Használt Autó Kereskedés</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('partials/nav') %>
+
+    <h1>Használt Autó Kereskedés</h1>
+
+    <div class="search-section">
+        <h3>Keresés</h3>
+        <form action="/" method="GET">
+            <input type="text" name="brand" placeholder="Márka" value="<%= typeof query !== 'undefined' ? query.brand : '' %>">
+            <input type="text" name="city" placeholder="Város" value="<%= typeof query !== 'undefined' ? query.city : '' %>">
+            <input type="number" name="minPrice" placeholder="Min Ár" value="<%= typeof query !== 'undefined' ? query.minPrice : '' %>">
+            <input type="number" name="maxPrice" placeholder="Max Ár" value="<%= typeof query !== 'undefined' ? query.maxPrice : '' %>">
+            <button type="submit">Keresés</button>
+            <a href="/" style="margin-left: 10px;">Szűrők törlése</a>
+        </form>
+    </div>
+
+    <div class="text-center">
+        <a href="/new" class="button btn-success">
+            + Új hirdetés feladása
+        </a>
+    </div>
+
+    <hr>
+
+    <h2>Elérhető Autók</h2>
+    <div class="container">
+        <% if (cars.length === 0) { %>
+            <p>Nincs találat a megadott feltételekre.</p>
+        <% } else { %>
+            <% cars.forEach(car => { %>
+                <div class="car-card">
+                    
+                    <h2 style="margin-top: 0;">
+                        <a href="/<%= car.id %>" class="card-title-link">
+                            <%= car.brand %> (<%= car.year %>)
+                        </a>
+                    </h2>
+
+                    <p><strong>Város:</strong> <%= car.city %></p>
+                    <p><strong>Ár:</strong> <%= car.price %> EUR</p>
+                    <p><em>Hirdető: <%= car.owner_name %></em></p>
+                    
+                    <button onclick="toggleExtraInfo('<%= car.id %>')" class="btn-info">
+                        Több infó
+                    </button>
+    
+                    <div id="extra-info-<%= car.id %>" class="extra-info-text"></div>
+                    
+                    <a href="/<%= car.id %>" class="details-link">Részletek / Képfeltöltés &rarr;</a>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>

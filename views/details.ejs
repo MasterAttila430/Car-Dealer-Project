@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Hirdetés Részletei</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('partials/nav') %>
+
+    <a href="/" class="back-link">&larr; Vissza a listához</a>
+
+    <div class="car-details">
+        <h1><%= car.brand %></h1>
+        <p><strong>Város:</strong> <%= car.city %></p>
+        <p><strong>Ár:</strong> <%= car.price %> EUR</p>
+        <p><strong>Évjárat:</strong> <%= car.year %></p>
+        <p><em>Eladó: <%= car.owner_name %></em></p>
+        <p><small>Feladva: <%= new Date(car.created_at).toLocaleDateString() %></small></p>
+    </div>
+
+    <hr>
+
+    <h3>Feltöltött Képek</h3>
+    <div class="gallery">
+        <% if (photos.length === 0) { %>
+            <p>Nincsenek feltöltött képek ehhez az autóhoz.</p>
+        <% } else { %>
+            <% photos.forEach(photo => { %>
+                <div class="photo-card" id="photo-card-<%= photo.id %>">
+                    <img src="/images/<%= photo.filename %>" alt="Autó kép">
+                    <% if (isOwner) { %>
+                        <button class="delete-btn" data-id="<%= photo.id %>">
+                            Törlés 
+                        </button>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <hr>
+
+    <% if (isOwner) { %>
+        <h3>Új kép feltöltése ehhez az autóhoz</h3>
+        <form action="/upload" method="POST" enctype="multipart/form-data" id="imageForm">
+            <input type="hidden" name="carId" value="<%= car.id %>">
+            <input type="file" name="carImage" accept="image/*" required>
+            <button type="submit">Feltöltés</button>
+        </form>
+        <p id="imageMessage"></p>
+    <% } %>
+
+    <script src="/script.js"></script>
+</body>
+</html>

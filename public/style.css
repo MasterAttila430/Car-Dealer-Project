@@ -1,0 +1,238 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+h1,
+h2,
+h3 {
+  color: #2c3e50;
+}
+
+a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Általános Gombok */
+button,
+.button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+}
+
+button:hover,
+.button:hover {
+  background-color: #2980b9;
+}
+
+/* Zöld gomb (Mentés, Új hirdetés, Regisztráció) */
+.btn-success {
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Teljes szélességű gomb (Login, Register) */
+.btn-block {
+  width: 100%;
+  padding: 10px;
+}
+
+/* Törlés gomb (Piros) */
+.delete-btn {
+  background-color: #e74c3c;
+  width: 100%;
+  margin-top: auto;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Info gomb (Szürke) */
+.btn-info {
+  background: #eeeeee;
+  color: #333333;
+  border: 1px solid #cccccc;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+}
+
+.btn-info:hover {
+  background: #e2e6ea;
+}
+
+/* Űrlap elemek */
+input[type='text'],
+input[type='number'],
+input[type='password'],
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+/* Teljes szélességű inputok (Create, Login, Register) */
+.form-control {
+  width: 100%;
+  padding: 10px; /* Egységes padding a login/create oldalakhoz */
+  margin-bottom: 10px;
+  margin-top: 5px;
+  box-sizing: border-box; /* Fontos, hogy a padding ne növelje a szélességet */
+}
+
+/* Form csoportosítás */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Kártya stílusok */
+.car-card {
+  background: white;
+  border: 1px solid #cccccc;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.car-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.form-card {
+  background: white;
+  padding: 20px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+/* Hibaüzenetek */
+.error-box {
+  background-color: #ffe6e6; /* rgb(255, 230, 230) */
+  border: 1px solid red;
+  color: red;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.error-text {
+  color: red;
+}
+
+/* Galéria */
+.gallery {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.photo-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Auth oldalak (Login/Register) konténer */
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+/* Keresés szekció */
+.search-section {
+  background: #f0f0f0;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+/* Részletek oldal */
+.car-details {
+  border: 2px solid #333333;
+  padding: 20px;
+}
+
+/* Egyéb segédosztályok */
+.text-center {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.extra-info-text {
+  color: #666666;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.card-title-link {
+  text-decoration: none;
+  color: #333333;
+}
+
+.details-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.error-page-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.error-title {
+  color: red;
+}
+
+.error-message {
+  font-size: 18px;
+}

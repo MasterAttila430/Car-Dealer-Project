@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Új Hirdetés Feladása</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('partials/nav') %>
+
+    <div class="container">
+        <h1>Új autó hirdetés feladása</h1>
+
+        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+            <div class="error-box">
+                <strong>Hiba történt:</strong>
+                <ul>
+                    <% errors.forEach(error => { %>
+                        <li><%= error %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
+
+        <form action="/new" method="POST" class="form-card">
+
+            <div class="form-group">
+                <label for="brand">Márka:</label><br>
+                <input type="text" name="brand" id="brand" 
+                       value="<%= (typeof formData !== 'undefined' && formData.brand) || '' %>" 
+                       required class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="city">Város:</label><br>
+                <input type="text" name="city" id="city" 
+                       value="<%= (typeof formData !== 'undefined' && formData.city) || '' %>" 
+                       required class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Ár (EUR):</label><br>
+                <input type="number" name="price" id="price" min="1" 
+                       value="<%= (typeof formData !== 'undefined' && formData.price) || '' %>" 
+                       required class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="year">Évjárat:</label><br>
+                <input type="number" name="year" id="year" min="1900" max="2025" 
+                       value="<%= (typeof formData !== 'undefined' && formData.year) || '' %>" 
+                       required class="form-control">
+            </div>
+
+            <button type="submit" class="btn-success">
+                Mentés
+            </button>
+        </form>
+
+        <br>
+        <a href="/" class="back-link">&larr; Vissza a főoldalra</a>
+    </div>
+
+</body>  
+</html>

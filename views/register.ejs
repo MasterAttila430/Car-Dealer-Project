@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Regisztráció</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Regisztráció</h1>
+        
+        <% if (typeof message !== 'undefined') { %>
+            <p class="error-text"><%= message %></p>
+        <% } %>
+
+        <form action="/register" method="POST">
+            <input type="text" name="name" placeholder="Felhasználónév" required class="form-control">
+            <input type="password" name="password" placeholder="Jelszó" required class="form-control">
+            <button type="submit" class="btn-block btn-success">Regisztrálok</button>
+        </form>
+
+        <br>
+        <a href="/login">Már van fiókom</a> | <a href="/">Vissza</a>
+    </div>
+</body>
+</html>
