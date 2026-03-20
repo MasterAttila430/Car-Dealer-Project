@@ -1,99 +1,127 @@
-# Webprogramozás laborfeladatok
+# Car Dealer Web App
 
-Kesziteni kell egy Microsoft sql car_dealer adatbazis:
+A full-stack used car marketplace where users can register, log in, post car listings, upload photos and search for cars by brand, city or price range.
 
-IF NOT EXISTS(SELECT \* FROM sys.databases WHERE name = 'car_dealer')
+## Tech Stack
+
+- **Backend:** Node.js, Express.js
+- **Templating:** EJS
+- **Database:** Microsoft SQL Server (mssql)
+- **Authentication:** bcrypt, express-session
+- **File Upload:** Multer
+- **Environment:** dotenv
+
+## Features
+
+- User registration and login with hashed passwords
+- Session-based authentication and route protection
+- Post and browse car listings with photo upload
+- Filter listings by brand, city and price range
+- Owner-only photo deletion
+- HTTP request logging to the database
+
+## Project Structure
+
+├── config/ # Database connection
+├── controllers/ # Auth and car listing logic
+├── middleware/ # Auth guard, request logger
+├── routes/ # Express routes
+├── views/ # EJS templates and partials
+├── public/ # CSS, JS, uploaded images
+├── index.js # App entry point
+└── .env.example # Environment variable template
+
+text
+
+## Getting Started
+
+```bash
+git clone https://github.com/MasterAttila430/Car-Dealer-Project.git
+cd Car-Dealer-Project
+npm install
+Create a .env file based on .env.example:
+
+text
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_SERVER=localhost
+DB_NAME=car_dealer
+SESSION_SECRET=your_secret_key
+PORT=3000
+Database Setup
+Run the following SQL scripts in SQL Server Management Studio (SSMS):
+
+sql
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'car_dealer')
 BEGIN
-CREATE DATABASE car_dealer;
+  CREATE DATABASE car_dealer;
 END
 GO
 
 USE car_dealer;
 GO
 
-IF NOT EXISTS (SELECT \* FROM sys.tables WHERE name = 'users')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'users')
 BEGIN
-CREATE TABLE users (
-id INT IDENTITY(1,1) PRIMARY KEY,
-name NVARCHAR(100) NOT NULL
-);
+  CREATE TABLE users (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL,
+    password NVARCHAR(255),
+    role NVARCHAR(50) DEFAULT 'user'
+  );
 END
 GO
 
-IF NOT EXISTS (SELECT \* FROM sys.tables WHERE name = 'ads')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'ads')
 BEGIN
-CREATE TABLE ads (
-id INT IDENTITY(1,1) PRIMARY KEY,
-brand NVARCHAR(100) NOT NULL,
-city NVARCHAR(100) NOT NULL,
-price DECIMAL(10, 2) NOT NULL,
-year INT NOT NULL,
-user_id INT,
-created_at DATETIME DEFAULT GETDATE(),
-FOREIGN KEY (user_id) REFERENCES users(id)
-);
+  CREATE TABLE ads (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    brand NVARCHAR(100) NOT NULL,
+    city NVARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    year INT NOT NULL,
+    user_id INT,
+    created_at DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
 END
 GO
 
-IF NOT EXISTS (SELECT \* FROM sys.tables WHERE name = 'photos')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'photos')
 BEGIN
-CREATE TABLE photos (
-id INT IDENTITY(1,1) PRIMARY KEY,
-filename NVARCHAR(255) NOT NULL,
-ad_id INT NOT NULL,
-FOREIGN KEY (ad_id) REFERENCES ads(id) ON DELETE CASCADE
-);
+  CREATE TABLE photos (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    filename NVARCHAR(255) NOT NULL,
+    ad_id INT NOT NULL,
+    FOREIGN KEY (ad_id) REFERENCES ads(id) ON DELETE CASCADE
+  );
 END
 GO
 
-IF NOT EXISTS (SELECT \* FROM sys.tables WHERE name = 'request_logs')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'request_logs')
 BEGIN
-CREATE TABLE request_logs (
-id INT IDENTITY(1,1) PRIMARY KEY,
-url NVARCHAR(2048),
-method NVARCHAR(10),
-created_at DATETIME DEFAULT GETDATE()
-);
+  CREATE TABLE request_logs (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    url NVARCHAR(2048),
+    method NVARCHAR(10),
+    created_at DATETIME DEFAULT GETDATE()
+  );
 END
 GO
+Optionally seed some test data:
 
-IF NOT EXISTS (SELECT \* FROM users)
-BEGIN
-INSERT INTO users (name) VALUES ('Teszt Elek'), ('Jancsika Mancsika'), ('Kovács János');
-END
-
-IF NOT EXISTS (SELECT \* FROM ads)
-BEGIN
+sql
 INSERT INTO ads (brand, city, price, year, user_id)
 VALUES ('Opel Astra', 'Szeged', 1500, 2005, 1),
-('Suzuki Swift', 'Budapest', 800, 2001, 2);
-END
-GO
+       ('Suzuki Swift', 'Budapest', 800, 2001, 2);
+Start the App
+bash
+npm start
+The app runs at http://localhost:3000
 
-a kepek a public/images mappaba kerulnek
-a program a webprog felhasznalot hasznalom
-a kod:Titkos1232004
+Notes
+Passwords are hashed with bcrypt before storing
 
-LAB6
-azert toroltem ki hogy tiszta lappal kezdjem, valamint egy uj oszlopot alkottam ahol a nevet es a jelszot tarolom
-USE car_dealer;
-GO
+Credentials are kept in .env and never committed to version control
 
-DELETE FROM photos;
-DELETE FROM ads;
-DELETE FROM users;
-GO
-
-IF NOT EXISTS (SELECT \* FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'users' AND COLUMN_NAME = 'password')
-BEGIN
-ALTER TABLE users ADD password NVARCHAR(255);
-END
-GO
-
-IF NOT EXISTS (SELECT \* FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'users' AND COLUMN_NAME = 'role')
-BEGIN
-ALTER TABLE users ADD role NVARCHAR(50) DEFAULT 'user';
-END
-GO
-
-SELECT \* FROM users;
+Uploaded images are stored in public/images/ and excluded from the repository
