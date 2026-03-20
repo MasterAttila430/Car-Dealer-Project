@@ -1,0 +1,21 @@
+<nav style="background: rgb(240, 240, 240); padding: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+            <span>Hello, <strong><%= currentUser %></strong>!</span>
+        <% } else { %>
+            <span>Guest</span>
+        <% } %>
+    </div>
+    <div>
+        <a href="/" style="margin-right: 15px; font-weight: bold; text-decoration: none; color: #333;">Home</a>
+        
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+            <form action="/logout" method="POST" style="display:inline;">
+                <button type="submit" style="color: red; cursor: pointer; border: none; background: none; font-size: 1em; text-decoration: underline;">Logout</button>
+            </form>
+        <% } else { %>
+            <a href="/login" style="margin-right: 15px;">Login</a>
+            <a href="/register" style="font-weight: bold;">Register</a>
+        <% } %>
+    </div>
+</nav>

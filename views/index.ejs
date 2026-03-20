@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Used Car Marketplace</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('partials/nav') %>
+
+    <h1>Used Car Marketplace</h1>
+
+    <div class="search-section">
+        <h3>Search</h3>
+        <form action="/" method="GET">
+            <input type="text" name="brand" placeholder="Brand" value="<%= typeof query !== 'undefined' ? query.brand : '' %>">
+            <input type="text" name="city" placeholder="City" value="<%= typeof query !== 'undefined' ? query.city : '' %>">
+            <input type="number" name="minPrice" placeholder="Min Price" value="<%= typeof query !== 'undefined' ? query.minPrice : '' %>">
+            <input type="number" name="maxPrice" placeholder="Max Price" value="<%= typeof query !== 'undefined' ? query.maxPrice : '' %>">
+            <button type="submit">Search</button>
+            <a href="/" style="margin-left: 10px;">Clear filters</a>
+        </form>
+    </div>
+
+    <div class="text-center">
+        <a href="/new" class="button btn-success">
+            + Post New Listing
+        </a>
+    </div>
+
+    <hr>
+
+    <h2>Available Cars</h2>
+    <div class="container">
+        <% if (cars.length === 0) { %>
+            <p>No results found for the given criteria.</p>
+        <% } else { %>
+            <% cars.forEach(car => { %>
+                <div class="car-card">
+                    
+                    <h2 style="margin-top: 0;">
+                        <a href="/<%= car.id %>" class="card-title-link">
+                            <%= car.brand %> (<%= car.year %>)
+                        </a>
+                    </h2>
+
+                    <p><strong>City:</strong> <%= car.city %></p>
+                    <p><strong>Price:</strong> <%= car.price %> EUR</p>
+                    <p><em>Seller: <%= car.owner_name %></em></p>
+                    
+                    <button onclick="toggleExtraInfo('<%= car.id %>')" class="btn-info">
+                        More info
+                    </button>
+
+                    <div id="extra-info-<%= car.id %>" class="extra-info-text"></div>
+                    
+                    <a href="/<%= car.id %>" class="details-link">Details / Upload Photo &rarr;</a>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>

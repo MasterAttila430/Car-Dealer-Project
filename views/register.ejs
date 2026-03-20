@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Register</h1>
+        
+        <% if (typeof message !== 'undefined') { %>
+            <p class="error-text"><%= message %></p>
+        <% } %>
+
+        <form action="/register" method="POST">
+            <input type="text" name="name" placeholder="Username" required class="form-control">
+            <input type="password" name="password" placeholder="Password" required class="form-control">
+            <button type="submit" class="btn-block btn-success">Create Account</button>
+        </form>
+
+        <br>
+        <a href="/login">Already have an account?</a> | <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>

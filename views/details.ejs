@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listing Details</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('partials/nav') %>
+
+    <a href="/" class="back-link">&larr; Back to listings</a>
+
+    <div class="car-details">
+        <h1><%= car.brand %></h1>
+        <p><strong>City:</strong> <%= car.city %></p>
+        <p><strong>Price:</strong> <%= car.price %> EUR</p>
+        <p><strong>Year:</strong> <%= car.year %></p>
+        <p><em>Seller: <%= car.owner_name %></em></p>
+        <p><small>Posted: <%= new Date(car.created_at).toLocaleDateString() %></small></p>
+    </div>
+
+    <hr>
+
+    <h3>Uploaded Photos</h3>
+    <div class="gallery">
+        <% if (photos.length === 0) { %>
+            <p>No photos uploaded for this car.</p>
+        <% } else { %>
+            <% photos.forEach(photo => { %>
+                <div class="photo-card" id="photo-card-<%= photo.id %>">
+                    <img src="/images/<%= photo.filename %>" alt="Car photo">
+                    <% if (isOwner) { %>
+                        <button class="delete-btn" data-id="<%= photo.id %>">
+                            Delete
+                        </button>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <hr>
+
+    <% if (isOwner) { %>
+        <h3>Upload a New Photo</h3>
+        <form action="/upload" method="POST" enctype="multipart/form-data" id="imageForm">
+            <input type="hidden" name="carId" value="<%= car.id %>">
+            <input type="file" name="carImage" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+        <p id="imageMessage"></p>
+    <% } %>
+
+    <script src="/script.js"></script>
+</body>
+</html>
